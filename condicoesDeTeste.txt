@@ -1,0 +1,45 @@
+JIRA-1: Cadastro de um Usuário
+
+ID / Condição / Resultado Esperado / Camada
+1 / Tentar cadastrar usuário com e-mail já existente / Falha no cadastro / API 
+2 / Tentar cadastrar usuário com todos os campos obrigatórios informados / Sucesso no cadastro / API
+
+JIRA-2: Cadastro de um Grupo
+ID / Condição / Resultado Esperado / Camada
+1 / Tentar cadastrar grupo sem estar autenticado  / Falha no cadastro / API 
+2 / Tentar cadastrar grupo com nome já existente / Falha no cadastro / API 
+3 / Criar grupo com nome válido / Sucesso no cadastro / API 
+4 / Verificar vinculação automática do criador ao grupo  / Criador vinculado ao grupo / API
+
+JIRA-3: Entrada de Usuário em Grupo Existente 
+ID / Condição / Resultado Esperado / Camada
+1  / Tentar entrar em um grupo inexistente / Falha no ingresso / API 
+2 / Tentar entrar em um grupo já pertencente  / Falha no ingresso / API 
+3 / Tentar entrar em um grupo ativo e válido / Sucesso no ingresso / API
+
+JIRA-4: Registro de Gasto por Integrante 
+ID / Condição / Resultado Esperado / Camada
+1 / Tentar registrar gasto sem estar autenticado ou sem vínculo ao grupo / Falha de registro / API 
+2 / Registrar gasto em grupo do qual o usuário faz parte / Sucesso no registro / API
+3 / Registrar gasto com valor menor ou igual a zero / Falha no registro / API 
+4 / Registrar gasto com valor maior que zero / Sucesso no registro / API 
+5 / Registrar gasto sem informações obrigatórias / Falha no registro / API
+
+JIRA-5: Registro de Gasto por Integrante
+ID / Condição / Resultado Esperado / Camada
+1 / Tentar visualizar gastos de grupo não pertencente / Falha na visualização / API
+2 / Visualizar lista de gastos de grupo pertencente / Exibição da lista de gastos / API
+3 /Visualizar detalhes de um gasto / Exibição dos detalhes / API
+4 /Visualizar total por integrante e total geral do grupo / Exibição dos totais / API
+
+
+ 
+
+ 
+ 
+
+ 
+
+ 
+
+ 

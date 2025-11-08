@@ -1,0 +1,242 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Gestão de Gastos Compartilhados API",
+    "version": "1.0.0",
+    "description": "API para gerenciamento de gastos compartilhados entre usuários."
+  },
+  "paths": {
+  "/api/login": {
+    "post": {
+      "summary": "Autentica usuário e retorna token JWT",
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/LoginRequest" }
+          }
+        }
+      },
+      "responses": {
+        "200": {
+          "description": "Token JWT gerado",
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginResponse" }
+            }
+          }
+        },
+        "401": { "description": "Usuário ou senha inválidos" }
+      }
+    }
+  },
+  "/api/grupos": {
+    "post": {
+      "summary": "Cria um novo grupo de gastos compartilhados",
+      "security": [{ "bearerAuth": [] }],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": { "$ref": "#/components/schemas/GrupoRequest" }
+          }
+        }
+      },
+      "responses": {
+        "201": {
+          "description": "Grupo criado com sucesso",
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Grupo" }
+            }
+          }
+        },
+        "400": { "description": "Nome do grupo já existe ou dados inválidos" },
+        "401": { "description": "Token não fornecido ou inválido" }
+      }
+    }
+  },
+    "/api/register": {
+      "post": {
+        "summary": "Registra novo usuário",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RegisterRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RegisterResponse" }
+              }
+            }
+          },
+          "400": { "description": "Usuário já existe" }
+        }
+      }
+    },
+    "/api/gastos": {
+      "get": {
+        "summary": "Lista gastos do usuário autenticado",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Lista de gastos",
+            "content": {
+              "application/json": {
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/Gasto" } }
+              }
+            }
+          },
+          "401": { "description": "Token não fornecido ou inválido" }
+        }
+      },
+      "post": {
+        "summary": "Cria novo gasto para usuário autenticado",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/GastoRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Gasto criado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Gasto" }
+              }
+            }
+          },
+          "401": { "description": "Token não fornecido ou inválido" }
+        }
+      }
+    },
+    "/api/gastos/{id}": {
+      "put": {
+        "summary": "Atualiza gasto do usuário autenticado",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/GastoRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gasto atualizado",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Gasto" }
+              }
+            }
+          },
+          "404": { "description": "Gasto não encontrado" },
+          "401": { "description": "Token não fornecido ou inválido" }
+        }
+      },
+      "delete": {
+        "summary": "Remove gasto do usuário autenticado",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "integer" } }],
+        "responses": {
+          "204": { "description": "Gasto removido" },
+          "404": { "description": "Gasto não encontrado" },
+          "401": { "description": "Token não fornecido ou inválido" }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["username", "password"]
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "token": { "type": "string" }
+        }
+      },
+      "RegisterRequest": {
+        "type": "object",
+        "properties": {
+          "username": { "type": "string" },
+          "password": { "type": "string" }
+        },
+        "required": ["username", "password"]
+      },
+      "RegisterResponse": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "username": { "type": "string" }
+        }
+      },
+      "Gasto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "userId": { "type": "integer" },
+          "grupoId": { "type": "integer" },
+          "descricao": { "type": "string" },
+          "valor": { "type": "number" },
+          "categoria": { "type": "string" },
+          "data": { "type": "string" }
+        }
+      },
+      "Grupo": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "nome": { "type": "string" },
+          "integrantes": {
+            "type": "array",
+            "items": { "type": "integer" }
+          }
+        }
+      },
+      "GrupoRequest": {
+        "type": "object",
+        "properties": {
+          "nome": { "type": "string" }
+        },
+        "required": ["nome"]
+      },
+      "GastoRequest": {
+        "type": "object",
+        "properties": {
+          "grupoId": { "type": "integer", "description": "ID do grupo já criado ao qual o gasto pertence" },
+          "descricao": { "type": "string" },
+          "valor": { "type": "number" },
+          "categoria": { "type": "string" },
+          "data": { "type": "string" }
+        },
+        "required": ["grupoId", "descricao", "valor", "categoria", "data"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

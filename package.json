@@ -1,0 +1,19 @@
+{
+  "name": "gestao-gastos-compartilhados",
+  "version": "1.0.0",
+  "description": "API Rest para gestão de gastos compartilhados.",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "mocha test/**/*.test.js --require dotenv/config",
+    "test:report": "mocha test/**/*.test.js --require dotenv/config --reporter mochawesome"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "swagger-ui-express": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
