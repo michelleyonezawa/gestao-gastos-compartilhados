@@ -12,6 +12,9 @@ exports.login = (req, res) => {
 
 exports.register = (req, res) => {
   const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Os campos obrigatórios são username e password.' });
+  }
   const user = userService.register(username, password);
   if (!user) return res.status(400).json({ error: 'Usuário já existe' });
   res.status(201).json({ id: user.id, username: user.username });

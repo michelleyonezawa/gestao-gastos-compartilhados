@@ -1,6 +1,7 @@
+
 require('dotenv').config();
 const request = require('supertest');
-const BASE_URL = process.env.BASE_URL;
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
 
 async function getToken(username, password) {
   const res = await request(BASE_URL)
@@ -10,4 +11,9 @@ async function getToken(username, password) {
 }
 
 module.exports = { BASE_URL, getToken, request };
+
+
+
+module.exports = { BASE_URL, getToken, request };module.exports = { BASE_URL, getToken, request };
+
 

@@ -1,5 +1,4 @@
 JIRA-1: Cadastro de um Usuário
-
 ID / Condição / Resultado Esperado / Camada
 1 / Tentar cadastrar usuário com e-mail já existente / Falha no cadastro / API 
 2 / Tentar cadastrar usuário com todos os campos obrigatórios informados / Sucesso no cadastro / API

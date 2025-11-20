@@ -11,3 +11,9 @@ exports.register = (username, password) => {
 exports.authenticate = (username, password) => {
   return users.find(u => u.username === username && u.password === password);
 };
+
+// Método para resetar usuários durante testes
+exports._reset = () => {
+  users.length = 0;
+  nextId = 1;
+};
