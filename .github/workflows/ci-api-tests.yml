@@ -22,8 +22,6 @@ jobs:
         run: npm install
       - name: Start API server
         run: npm start &
-      - name: Wait for API to be ready
-        run: |
-          npm run http://localhost:3000/api/register
+        # Removido passo de wait-on, não será utilizado
       - name: Run API tests
         run: npm test
